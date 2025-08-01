@@ -1,0 +1,482 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="preload" href="bgmusic.mp3" as="audio">
+<link rel="preload" href="fireworks.mp3" as="audio">
+
+  <meta charset="UTF-8">
+  <title>To my MaJinBoo!!!</title>
+  <style>
+    html, body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('bgimage.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+      height: 100%;
+      margin: 0;
+      overflow: auto;
+    }
+    .box {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 300px;
+      margin: 2rem auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 60vh;
+      position: relative;
+      z-index: 1;
+      animation: fadeIn 1.5s ease-out;
+    }
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+    }
+    .gallery img, .gallery video {
+      width: 90vw;
+      max-width: 600px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 10px;
+      background-color: #ff99c8;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #ff70b3;
+    }
+    #letter {
+      display: none;
+      margin-top: 20px;
+      overflow-y: auto;
+      max-height: 90vh;
+    }
+    #letter .img-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 1rem;
+      width: 100%;
+    }
+    #letter img {
+      width: 90vw;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      max-width: 600px;
+    }
+    canvas.fireworks {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    #popupMessage {
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 1.5rem 2rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+      font-size: 1.2rem;
+      display: none;
+      animation: bounceFade 1.5s ease;
+    }
+    @keyframes bounceFade {
+      0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+      50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+
+    /* 💫 Emoji Sparkle Effect */
+    .emoji-sparkle {
+      position: absolute;
+      font-size: 24px;
+      animation: sparkleFade 1.5s ease-out forwards;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    @keyframes sparkleFade {
+      0% { opacity: 0; transform: scale(0.5) translateY(0); }
+      50% { opacity: 1; transform: scale(1.5) translateY(-10px); }
+      100% { opacity: 0; transform: scale(0.5) translateY(-20px); }
+    }
+.heart-trail {
+will-change: transform, opacity;
+  position: fixed;
+  font-size: 18px;
+  opacity: 0;
+  animation: heartFloat 1.8s ease-out forwards, fadeInHeart 0.3s ease-in;
+  pointer-events: none;
+  z-index: 9999;
+  text-shadow: 0 0 10px pink, 0 0 20px deeppink;
+}
+
+
+@keyframes heartFloat {
+  0% { transform: scale(1) translateY(0); opacity: 1; }
+  100% { transform: scale(0.5) translateY(-80px); opacity: 0; }
+}
+
+#hugButton {
+  display: none;
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  background-color: #ff66a5;
+  font-size: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes screenShake {
+  0% { transform: translate(0px, 0px); }
+  20% { transform: translate(-8px, 6px); }
+  40% { transform: translate(8px, -6px); }
+  60% { transform: translate(-8px, 6px); }
+  80% { transform: translate(8px, -6px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+.shake {
+  animation: screenShake 0.4s ease;
+}
+
+
+
+  </style>
+</head>
+<body>
+<audio id="bgmusic" loop autoplay>
+  <source src="bgmusic.mp3" type="audio/mpeg">
+</audio>
+<audio id="clicksound">
+  <source src="Clicksound.mp3" type="audio/mpeg">
+</audio>
+<audio id="fireworksound">
+  <source src="fairydust.mp3" type="audio/mpeg">
+</audio>
+<audio id="hugSound">
+  <source src="hug.mp3" type="audio/mpeg">
+</audio>
+<div id="popupMessage">💌 Iloveyou MajinBoo 💕💕💕</div>
+<canvas class="fireworks"></canvas>
+<div class="box" id="intro-box">
+  <div>Hi Maj! 💕 I have a little surprise for you. I poured my time, my little skills, and a whole lot of excitement into this page, hoping I could make you smile today! 😺</div>
+  <button onclick="startGallery()">Continue</button>
+</div>
+<div class="gallery" id="gallery" style="display:none;">
+  <img src="photo1.jpeg" alt="Memory 1">
+  <img src="photo2.jpeg" alt="Memory 2">
+  <img src="photo3.JPG" alt="Memory 3">
+  <img src="photo4.jpeg" alt="Memory 4">
+  <img src="photo5.png" alt="Memory 5">
+  <img src="photo6.jpeg" alt="Memory 6">
+  <img src="photo7.jpeg" alt="Memory 7">
+  <img src="photo8.jpeg" alt="Memory 8">
+  <img src="photo9.JPG" alt="Memory 9">
+  <img src="photo10.jpg" alt="Memory 10">
+  <img src="photo11.jpeg" alt="Memory 11">
+  <video controls>
+    <source src="video1.mp4" type="video/mp4">
+  </video>
+  <video controls>
+    <source src="video2.mp4" type="video/mp4">
+  </video>
+  <button onclick="startQuestions()">Continue</button>
+</div>
+<div class="box" id="question-box" style="display:none;">
+  <div id="question"></div>
+  <div id="buttons">
+    <button onclick="nextQuestion('yes')">Yes</button>
+    <button onclick="nextQuestion('no')">No</button>
+  </div>
+  <div id="letter"></div>
+</div>
+<button id="hugButton" onclick="hugMeAgain()">Click me again 😘</button>
+
+<script>
+const canvas = document.querySelector("canvas.fireworks");
+const ctx = canvas.getContext("2d");
+let fireworks = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+function launchFireworks() {
+  for (let i = 0; i < 40; i++) {
+    fireworks.push({
+      x: Math.random() * canvas.width,
+      y: canvas.height,
+      radius: 2 + Math.random() * 4,
+      dx: (Math.random() - 0.5) * 4,
+      dy: -Math.random() * 8 - 4,
+      shape: Math.random() > 0.5 ? "circle" : "heart",
+      color: `hsl(${Math.random() * 360}, 100%, 70%)`,
+      emoji: Math.random() > 0.7 ? "✨" : null
+    });
+  }
+}
+
+function drawHeart(x, y, size, color) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.bezierCurveTo(0, -size / 2, -size, -size / 2, -size, 0);
+  ctx.bezierCurveTo(-size, size / 2, 0, size, 0, size);
+  ctx.bezierCurveTo(0, size, size, size / 2, size, 0);
+  ctx.bezierCurveTo(size, -size / 2, 0, -size / 2, 0, 0);
+  ctx.fillStyle = color;
+  ctx.fill();
+  ctx.restore();
+}
+
+function animateFireworks() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  fireworks.forEach((f, index) => {
+    if (f.shape === "heart") {
+      drawHeart(f.x, f.y, f.radius * 2, f.color);
+    } else {
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+      ctx.fillStyle = f.color;
+      ctx.fill();
+    }
+    if (f.emoji) {
+      ctx.font = '20px serif';
+      ctx.fillText(f.emoji, f.x - 10, f.y);
+    }
+    f.x += f.dx;
+    f.y += f.dy;
+    f.dy += 0.1;
+    if (f.y > canvas.height) fireworks.splice(index, 1);
+  });
+  requestAnimationFrame(animateFireworks);
+}
+
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+animateFireworks();
+
+const bgMusic = document.getElementById("bgmusic");
+const clickSound = document.getElementById("clicksound");
+const fireworkSound = document.getElementById("fireworksound");
+
+bgMusic.volume = 0.05;
+
+function startGallery() {
+  document.getElementById("intro-box").style.display = "none";
+  document.getElementById("gallery").style.display = "flex";
+  bgMusic.play();
+  clickSound.play();
+}
+
+let stage = 0;
+const questions = [
+  "These questions could either make or break our friendship for life. Ready?",
+  "CHAAAAAAAAAAAAAAARRRR HAHHAHAHHAHA NAPAKA OA😂",
+  "Kidding aside, you know Iloveyou right?",
+  "Nag YES ka, so it means may need ka himuon for me. OK?",
+  "Send me a reaction pic after this, okay? 😜. HAHHAHAHHA game?"
+];
+
+function startQuestions() {
+  document.getElementById("gallery").style.display = "none";
+  document.getElementById("question-box").style.display = "flex";
+  document.getElementById("question").innerText = questions[stage];
+}
+
+function nextQuestion(answer) {
+  if (answer === 'no') {
+    document.getElementById("question").innerText = "Luh? Anong NOOOOOO? D na ya pwede, you don't have the right to click No. Wala ka choice kundi... YES!!!";
+    return;
+  }
+  stage++;
+  if (stage < questions.length) {
+    document.getElementById("question").innerText = questions[stage];
+  } else {
+    showLetter();
+  }
+}
+
+function showLetter() {
+launchFireworks(); // already defined
+  document.getElementById("question").style.display = 'none';
+  document.getElementById("buttons").style.display = 'none';
+
+  const container = document.createElement("div");
+  container.className = "img-container";
+
+  const img1 = document.createElement("img");
+  img1.src = "1.png";
+  img1.alt = "First Part of the Letter";
+  img1.onload = () => {
+    sparkleEmojiAround(img1);
+  };
+  
+  img1.onerror = () => {
+  img1.alt = "Image failed to load. Please try again.";
+};
+  container.appendChild(img1);
+
+  const img2 = document.createElement("img");
+  img2.src = "2.png";
+  img2.alt = "Second Part of the Letter";
+img2.onload = () => {
+  fireworkSound.volume = 0.15;
+  fireworkSound.play();
+  sparkleEmojiAround(img2);
+
+  setTimeout(() => {
+    document.getElementById("hugButton").style.display = "block";
+    document.getElementById("hugButton").style.opacity = "0";
+    document.getElementById("hugButton").style.transition = "opacity 1s ease";
+    setTimeout(() => {
+      document.getElementById("hugButton").style.opacity = "1";
+    }, 10);
+  }, 2500);
+};
+
+img2.onerror = () => {
+  img2.alt = "Second image failed to load. Please try again.";
+};
+
+
+  container.appendChild(img2);
+
+  document.getElementById("letter").appendChild(container);
+  document.getElementById("letter").style.display = 'block';
+const nextButton = document.createElement("button");
+nextButton.innerText = "Next ➡️";
+nextButton.onclick = () => window.location.href = "VoiceMemo.html";
+document.getElementById("letter").appendChild(nextButton);
+
+
+
+  nextButton.innerText = "Next ➡️";
+  nextButton.onclick = () => {
+    window.location.href = "VoiceMemo.html";
+  };
+}
+
+
+window.onload = () => {
+  const fromVM = sessionStorage.getItem("fromVoiceMemo");
+
+  if (location.hash === "#letter" || fromVM === "true") {
+    document.getElementById("intro-box").style.display = "none";
+    document.getElementById("question-box").style.display = "flex";
+    showLetter();
+    bgMusic.play();
+    sessionStorage.removeItem("fromVoiceMemo"); // Clear it after use
+  }
+};
+
+// 💕 Heart trail on cursor move
+document.addEventListener("mousemove", (e) => {
+  const heart = document.createElement("div");
+  heart.className = "heart-trail";
+  heart.textContent = "💖";
+  heart.style.left = `${e.clientX}px`;
+  heart.style.top = `${e.clientY}px`;
+  heart.style.transition = 'transform 1.8s ease-out';
+  heart.style.transform = `translateX(${(Math.random() - 0.5) * 50}px)`;
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 1800);
+});
+
+
+// 🤗 Replay sparkle + hug sound
+function hugMeAgain() {
+  const hugSound = new Audio('hug.mp3');
+  hugSound.volume = 0.3;
+  hugSound.play();
+
+  // Screen shake effect
+  document.body.classList.add("shake");
+  setTimeout(() => {
+    document.body.classList.remove("shake");
+  }, 400);
+
+  // Replay sparkle on both images
+  const imgs = document.querySelectorAll("#letter img");
+  imgs.forEach(img => sparkleEmojiAround(img));
+}
+
+// 🌠 Extend sparkle and fireworks duration
+function sparkleEmojiAround(element) {
+  const emojis = ["✨", "🌟", "💖", "🩷", "🫧"];
+  const rect = element.getBoundingClientRect();
+
+  for (let i = 0; i < 35; i++) { // increased from 20 to 35
+    const emoji = document.createElement("div");
+    emoji.className = "emoji-sparkle";
+    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    emoji.style.left = `${rect.left + Math.random() * rect.width}px`;
+    emoji.style.top = `${rect.top + Math.random() * rect.height}px`;
+    document.body.appendChild(emoji);
+    setTimeout(() => emoji.remove(), 2000); // slower fade out
+  }
+}
+
+// Slower fireworks float
+function animateFireworks() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  fireworks.forEach((f, index) => {
+    if (f.shape === "heart") {
+      drawHeart(f.x, f.y, f.radius * 2, f.color);
+    } else {
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+      ctx.fillStyle = f.color;
+      ctx.fill();
+    }
+    if (f.emoji) {
+      ctx.font = '22px serif';
+      ctx.fillText(f.emoji, f.x - 10, f.y);
+    }
+    f.x += f.dx * 0.6;  // slower sideways drift
+    f.y += f.dy * 0.6;  // slower upward float
+    f.dy += 0.05;       // slower gravity
+    if (f.y > canvas.height) fireworks.splice(index, 1);
+  });
+  requestAnimationFrame(animateFireworks);
+}
+
+
+</script>
+</body>
+</html>
